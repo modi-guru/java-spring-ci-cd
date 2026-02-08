@@ -61,5 +61,5 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
             cd ~/spring-petclinic
-            ~/deploy.sh ${{ secrets.DOCKER_USERNAME }}/petclinic:${{ github.sha }}
+            ./deploy.sh ${{ secrets.DOCKER_USERNAME }}/petclinic:${{ github.sha }}
 

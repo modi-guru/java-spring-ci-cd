@@ -2,28 +2,12 @@
 
 IMAGE=$1
 
-if docker ps | grep petclinic-blue; then
-  NEW="green"
-  PORT=8081
-  OLD="blue"
-else
-  NEW="blue"
-  PORT=8080
-  OLD="green"
-fi
-
+echo "Pulling image $IMAGE"
 docker pull $IMAGE
 
-docker rm -f petclinic-$NEW || true
+echo "Removing old container"
+docker rm -f petclinic || true
 
-docker run -d -p $PORT:8080 --name petclinic-$NEW $IMAGE
-
-sleep 10
-
-if docker ps | grep petclinic-$NEW; then
-  docker rm -f petclinic-$OLD || true
-else
-  echo "New container failed"
-  exit 1
-fi
+echo "Starting new container"
+docker run -d -p 8080:8080 --name petclinic $IMAGE
 
